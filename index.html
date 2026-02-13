@@ -1,273 +1,206 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PDF Tool Ideator</title>
+  <title>PDF Intent Tool Architect</title>
   <style>
     :root {
-      --bg: #f3f6ff;
+      --bg: #f2f6ff;
       --panel: #ffffff;
-      --text: #122033;
-      --muted: #5f6f84;
-      --primary: #2f59ff;
-      --primary-dark: #1f43d7;
-      --border: #d8e0f3;
-      --success: #167c50;
-      --warning: #b36400;
-      --shadow: 0 14px 40px rgba(32, 72, 196, 0.18);
+      --text: #142238;
+      --muted: #5b6d84;
+      --brand: #2a56f6;
+      --brand-dark: #1f43c7;
+      --line: #dbe5fb;
+      --ok: #18794e;
+      --warn: #a35a00;
+      --shadow: 0 14px 36px rgba(22, 67, 203, 0.16);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      background: radial-gradient(circle at top, #edf3ff 0%, var(--bg) 45%, #eef4ff 100%);
       color: var(--text);
+      background: radial-gradient(circle at top, #e9f0ff, var(--bg));
       min-height: 100vh;
-      padding: 20px;
+      padding: 18px;
+      line-height: 1.5;
     }
 
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+    .container { max-width: 1120px; margin: 0 auto; }
 
     .app {
       background: var(--panel);
-      border: 1px solid var(--border);
+      border: 1px solid var(--line);
       border-radius: 18px;
-      box-shadow: var(--shadow);
       overflow: hidden;
+      box-shadow: var(--shadow);
     }
 
     .hero {
-      padding: 28px;
-      background: linear-gradient(130deg, #1f3cac, #2f59ff 62%, #5b7dff);
-      color: #f4f7ff;
+      padding: 24px;
+      background: linear-gradient(125deg, #1b3799, #2a56f6 60%, #5e80ff);
+      color: #f6f9ff;
     }
 
-    .hero h1 {
-      font-size: clamp(1.45rem, 2.6vw, 2rem);
-      margin-bottom: 10px;
-    }
+    .hero h1 { font-size: clamp(1.4rem, 2.5vw, 1.95rem); margin-bottom: 8px; }
+    .hero p { color: #dfe8ff; max-width: 86ch; }
 
-    .hero p {
-      color: #e2ebff;
-      max-width: 76ch;
-      line-height: 1.55;
-    }
-
-    .body {
-      padding: 22px;
-      display: grid;
-      gap: 18px;
-    }
+    .body { padding: 18px; display: grid; gap: 14px; }
 
     .section {
-      background: #fff;
-      border: 1px solid var(--border);
+      border: 1px solid var(--line);
       border-radius: 14px;
-      padding: 16px;
+      background: #fff;
+      padding: 14px;
     }
 
-    .section h2 {
-      font-size: 1.1rem;
-      margin-bottom: 12px;
-      color: #1f3cac;
-    }
+    .section h2 { color: #17379e; margin-bottom: 10px; font-size: 1.08rem; }
 
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-    label {
-      display: block;
-      font-weight: 650;
-      margin-bottom: 8px;
-      color: #18314f;
-    }
+    label { display: block; font-weight: 650; margin-bottom: 6px; color: #1a365d; }
 
     input[type="file"], textarea {
       width: 100%;
-      border: 1px solid var(--border);
+      border: 1px solid var(--line);
       border-radius: 10px;
-      padding: 12px;
+      padding: 11px;
       font: inherit;
       color: inherit;
       background: #f9fbff;
     }
 
-    textarea {
-      min-height: 170px;
-      resize: vertical;
-    }
+    textarea { min-height: 180px; resize: vertical; }
 
-    .hint {
+    .hint, .status {
       margin-top: 8px;
+      font-size: 0.92rem;
       color: var(--muted);
-      font-size: 0.9rem;
     }
-
-    .status {
-      margin-top: 12px;
-      font-size: 0.94rem;
-      color: var(--muted);
-      min-height: 20px;
-    }
-    .status.success { color: var(--success); }
-    .status.warn { color: var(--warning); }
+    .status { min-height: 20px; }
+    .status.ok { color: var(--ok); }
+    .status.warn { color: var(--warn); }
 
     button {
-      border: 0;
+      border: none;
       border-radius: 10px;
-      background: var(--primary);
-      color: #fff;
+      background: var(--brand);
+      color: white;
       font-weight: 650;
-      font-size: 0.95rem;
-      padding: 11px 16px;
       cursor: pointer;
-      transition: background .15s ease, transform .15s ease;
+      padding: 10px 14px;
+      transition: 0.15s ease;
     }
 
-    button:hover:not(:disabled) {
-      background: var(--primary-dark);
-      transform: translateY(-1px);
-    }
+    button:hover:not(:disabled) { background: var(--brand-dark); transform: translateY(-1px); }
+    button:disabled { opacity: 0.55; cursor: not-allowed; }
 
-    button:disabled {
-      opacity: .55;
-      cursor: not-allowed;
-    }
-
-    .ideas {
-      display: grid;
-      gap: 12px;
-      margin-top: 8px;
-    }
-
-    .idea-card {
-      border: 1px solid var(--border);
-      background: #fbfdff;
-      border-radius: 12px;
-      padding: 14px;
-    }
-
-    .idea-top {
-      display: flex;
-      gap: 10px;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 8px;
-    }
-
-    .idea-name {
-      font-weight: 750;
-      color: #1738a3;
-      margin-bottom: 6px;
-    }
-
-    .idea-short {
-      color: #2b3f57;
-      margin-bottom: 7px;
-      line-height: 1.45;
-    }
-
-    .idea-use {
-      color: #4a607c;
-      font-size: 0.93rem;
-      line-height: 1.45;
-      margin-bottom: 8px;
-    }
-
-    .keyword-list {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-top: 8px;
-    }
-
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
     .chip {
-      font-size: 0.78rem;
-      padding: 4px 8px;
+      background: #e5edff;
+      color: #2143b5;
       border-radius: 999px;
-      background: #e4edff;
-      color: #2046be;
+      padding: 3px 8px;
+      font-size: .78rem;
       font-weight: 600;
     }
 
-    .empty {
-      border: 1px dashed var(--border);
-      border-radius: 10px;
-      color: var(--muted);
-      background: #fbfdff;
-      padding: 12px;
-      font-size: .95rem;
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 10px;
     }
 
-    /* Modal */
+    .layer-card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fbfcff;
+      padding: 10px;
+    }
+
+    .layer-card h3 { font-size: .92rem; margin-bottom: 5px; color: #1b3fae; }
+    .layer-card p { font-size: .89rem; color: #3a4f69; }
+
+    .ideas { display: grid; gap: 10px; margin-top: 10px; }
+    .idea {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fbfdff;
+      padding: 12px;
+    }
+
+    .idea-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .idea h3 { font-size: 1rem; color: #1b3ca5; margin-bottom: 5px; }
+    .idea p { font-size: .93rem; color: #334a66; }
+    .idea .use { margin-top: 4px; color: #4e6078; }
+
+    .empty {
+      border: 1px dashed var(--line);
+      border-radius: 10px;
+      background: #fafcff;
+      color: var(--muted);
+      padding: 11px;
+      font-size: .92rem;
+    }
+
     .modal {
       position: fixed;
       inset: 0;
-      background: rgba(6, 15, 35, 0.55);
+      background: rgba(8, 16, 36, .58);
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 18px;
-      z-index: 30;
+      padding: 14px;
+      z-index: 40;
     }
-
     .modal.open { display: flex; }
 
     .modal-card {
       width: min(920px, 100%);
-      max-height: 88vh;
+      max-height: 90vh;
       overflow: auto;
       background: #fff;
+      border: 1px solid var(--line);
       border-radius: 14px;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      padding: 16px;
+      padding: 12px;
     }
 
     .modal-head {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
+      gap: 8px;
     }
 
-    .modal-title {
-      font-weight: 750;
-      color: #1738a3;
-    }
-
-    .prompt-text {
-      border: 1px solid #cdddff;
-      background: #f5f8ff;
+    .prompt-box {
+      border: 1px solid #cfe0ff;
+      background: #f5f9ff;
       border-radius: 10px;
-      padding: 12px;
+      padding: 11px;
+      font-size: .91rem;
+      line-height: 1.45;
       white-space: pre-wrap;
-      line-height: 1.5;
-      font-size: 0.93rem;
     }
 
-    .modal-actions {
-      display: flex;
-      gap: 10px;
-      justify-content: flex-end;
-      margin-top: 10px;
-    }
+    .actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px; }
 
-    @media (max-width: 860px) {
-      body { padding: 12px; }
-      .hero, .body { padding: 16px; }
+    @media (max-width: 920px) {
       .grid { grid-template-columns: 1fr; }
-      .idea-top { flex-direction: column; }
-      .idea-top button { width: 100%; }
+      .analysis-grid { grid-template-columns: 1fr; }
+      .idea-head { flex-direction: column; }
+      .idea-head button { width: 100%; }
     }
   </style>
 </head>
@@ -275,16 +208,16 @@
   <main class="container">
     <section class="app">
       <header class="hero">
-        <h1>PDF Tool Ideator</h1>
+        <h1>PDF Intent Tool Architect</h1>
         <p>
-          Upload a PDF, write your objective, and click <strong>Analyze PDF</strong>. The app extracts text with pdf.js,
-          identifies key topics/concepts, and suggests digital tools you can build from the content.
+          Sube un PDF y define tu objetivo. La app realiza análisis en 3 capas (léxica, semántica e intención)
+          para sugerir herramientas alineadas al propósito real del documento, evitando sesgos por frecuencia.
         </p>
       </header>
 
       <div class="body">
         <section class="section">
-          <h2>1) Input</h2>
+          <h2>1) Entrada</h2>
           <div class="grid">
             <div>
               <label for="pdfFile">PDF upload</label>
@@ -292,22 +225,27 @@
               <p id="fileStatus" class="hint">No file selected.</p>
             </div>
             <div>
-              <label for="instructions">Instructions / Goal</label>
-              <textarea id="instructions" placeholder="Example: I want to transform this PDF into interactive educational tools and searchable references for students and teachers."></textarea>
-              <p class="hint">Tip: describe your target users and expected outcome.</p>
+              <label for="instructions">Instrucciones del usuario</label>
+              <textarea id="instructions" placeholder="Describe qué resultado práctico deseas lograr con el contenido del PDF."></textarea>
+              <p class="hint">Incluye público objetivo, decisión o proceso que quieres habilitar.</p>
             </div>
           </div>
-          <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+
+          <div style="margin-top:12px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
             <button id="analyzeBtn" type="button">Analyze PDF</button>
-            <span id="analysisStatus" class="status">Waiting for input...</span>
+            <span id="status" class="status">Esperando análisis...</span>
           </div>
         </section>
 
         <section class="section">
-          <h2>2) Analysis Results</h2>
-          <div id="topicSummary" class="empty">Main topics and concepts will appear after analysis.</div>
-          <div id="ideas" class="ideas" aria-live="polite">
-            <div class="empty">No ideas yet. Upload a PDF and click Analyze PDF.</div>
+          <h2>2) Lectura de intención del documento</h2>
+          <div id="analysisOutput" class="empty">Aquí aparecerá el análisis por capas y la clasificación dominante.</div>
+        </section>
+
+        <section class="section">
+          <h2>3) Ideas de herramientas</h2>
+          <div id="ideas" class="ideas">
+            <div class="empty">No hay ideas todavía. Sube un PDF y pulsa Analyze PDF.</div>
           </div>
         </section>
       </div>
@@ -317,346 +255,406 @@
   <div id="promptModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="promptTitle">
     <div class="modal-card">
       <div class="modal-head">
-        <h3 id="promptTitle" class="modal-title">Generated Prompt</h3>
-        <button id="closeModalBtn" type="button" aria-label="Close prompt modal">Close</button>
+        <h3 id="promptTitle">Generated Prompt</h3>
+        <button id="closeModalBtn" type="button">Close</button>
       </div>
-      <pre id="promptText" class="prompt-text"></pre>
-      <div class="modal-actions">
-        <button id="copyPromptBtn" type="button">Copy Prompt</button>
+      <pre id="promptBody" class="prompt-box"></pre>
+      <div class="actions">
+        <button id="copyBtn" type="button">Copy Prompt</button>
       </div>
     </div>
   </div>
 
-  <!-- pdf.js CDN (requested for browser-side PDF text extraction) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs" type="module"></script>
-
   <script type="module">
-    // Access pdf.js from ESM global registration.
     import * as pdfjsLib from "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs";
 
-    // Worker setup required by pdf.js.
     pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs";
 
-    const fileInput = document.getElementById("pdfFile");
-    const instructionsInput = document.getElementById("instructions");
-    const analyzeBtn = document.getElementById("analyzeBtn");
-    const analysisStatus = document.getElementById("analysisStatus");
-    const fileStatus = document.getElementById("fileStatus");
-    const ideasEl = document.getElementById("ideas");
-    const topicSummaryEl = document.getElementById("topicSummary");
-
-    const promptModal = document.getElementById("promptModal");
-    const promptTextEl = document.getElementById("promptText");
-    const copyPromptBtn = document.getElementById("copyPromptBtn");
-    const closeModalBtn = document.getElementById("closeModalBtn");
+    const ui = {
+      pdfFile: document.getElementById("pdfFile"),
+      instructions: document.getElementById("instructions"),
+      analyzeBtn: document.getElementById("analyzeBtn"),
+      status: document.getElementById("status"),
+      fileStatus: document.getElementById("fileStatus"),
+      analysisOutput: document.getElementById("analysisOutput"),
+      ideas: document.getElementById("ideas"),
+      promptModal: document.getElementById("promptModal"),
+      promptTitle: document.getElementById("promptTitle"),
+      promptBody: document.getElementById("promptBody"),
+      closeModalBtn: document.getElementById("closeModalBtn"),
+      copyBtn: document.getElementById("copyBtn")
+    };
 
     let selectedFile = null;
     let currentPrompt = "";
 
-    fileInput.addEventListener("change", () => {
-      selectedFile = fileInput.files?.[0] || null;
-      if (!selectedFile) {
-        fileStatus.textContent = "No file selected.";
-        return;
-      }
-      const mb = (selectedFile.size / (1024 * 1024)).toFixed(2);
-      fileStatus.textContent = `Selected: ${selectedFile.name} (${mb} MB)`;
+    ui.pdfFile.addEventListener("change", () => {
+      selectedFile = ui.pdfFile.files?.[0] || null;
+      ui.fileStatus.textContent = selectedFile
+        ? `Selected: ${selectedFile.name} (${(selectedFile.size / (1024 * 1024)).toFixed(2)} MB)`
+        : "No file selected.";
     });
 
-    analyzeBtn.addEventListener("click", async () => {
-      if (!selectedFile) {
-        setStatus("Please upload a PDF file first.", "warn");
-        return;
-      }
+    ui.analyzeBtn.addEventListener("click", onAnalyze);
+    ui.closeModalBtn.addEventListener("click", closeModal);
+    ui.promptModal.addEventListener("click", (e) => { if (e.target === ui.promptModal) closeModal(); });
+    ui.copyBtn.addEventListener("click", copyPrompt);
 
-      const userInstructions = instructionsInput.value.trim();
-      if (userInstructions.length < 15) {
-        setStatus("Please provide richer instructions (at least 15 characters).", "warn");
-        return;
-      }
+    async function onAnalyze() {
+      if (!selectedFile) return setStatus("Please upload a PDF first.", "warn");
+      const userGoal = ui.instructions.value.trim();
+      if (userGoal.length < 20) return setStatus("Please write more detailed instructions (min 20 chars).", "warn");
 
-      analyzeBtn.disabled = true;
-      setStatus("Extracting PDF text with pdf.js...", "");
+      ui.analyzeBtn.disabled = true;
 
       try {
-        const extractedText = await extractFullTextFromPdf(selectedFile);
-        if (!extractedText || extractedText.length < 80) {
-          setStatus("Very little readable text found. Try another PDF or a text-based PDF.", "warn");
-        }
+        setStatus("Extracting full text with pdf.js...", "");
+        const text = await extractPdfText(selectedFile);
+        if (!text || text.length < 120) setStatus("Low text detected. Continuing with best-effort analysis.", "warn");
 
-        setStatus("Analyzing topics, concepts, and generating tool ideas...", "");
-        const { topics, concepts } = analyzeKeywordsAndConcepts(extractedText);
-        const ideas = generateToolIdeas({
-          topics,
-          concepts,
-          instructions: userInstructions,
-          sourceSnippet: extractedText.slice(0, 1200),
-          fileName: selectedFile.name
-        });
+        setStatus("Running lexical, semantic and intent analysis...", "");
+        const lexical = lexicalLayer(text);
+        const semantic = semanticLayer(text, userGoal);
+        const intent = intentLayer(semantic);
+        const selfCheck = selfValidation(semantic, intent);
 
-        renderTopicSummary(topics, concepts);
+        const ideas = generateTools({ lexical, semantic, intent, userGoal, textSnippet: text.slice(0, 1000), fileName: selectedFile.name });
+
+        renderAnalysis(lexical, semantic, intent, selfCheck);
         renderIdeas(ideas);
 
-        setStatus(`Analysis complete: ${ideas.length} tool ideas generated.`, "success");
-      } catch (error) {
-        console.error(error);
-        setStatus("Could not analyze this PDF. Please try a valid, non-protected PDF.", "warn");
+        setStatus(`Analysis complete: ${ideas.length} ideas generated.`, "ok");
+      } catch (err) {
+        console.error(err);
+        setStatus("Could not process this PDF. Try a valid non-protected file.", "warn");
       } finally {
-        analyzeBtn.disabled = false;
+        ui.analyzeBtn.disabled = false;
       }
-    });
+    }
 
-    closeModalBtn.addEventListener("click", closeModal);
-    promptModal.addEventListener("click", (event) => {
-      if (event.target === promptModal) closeModal();
-    });
+    async function extractPdfText(file) {
+      const bytes = await file.arrayBuffer();
+      const pdf = await pdfjsLib.getDocument({ data: bytes }).promise;
+      let fullText = "";
 
-    copyPromptBtn.addEventListener("click", async () => {
+      for (let p = 1; p <= pdf.numPages; p++) {
+        const page = await pdf.getPage(p);
+        const content = await page.getTextContent();
+        fullText += "\n" + content.items.map((it) => ("str" in it ? it.str : "")).join(" ");
+      }
+
+      return fullText.replace(/\s+/g, " ").replace(/[\u0000-\u001F]/g, " ").trim();
+    }
+
+    // STEP 1 — lexical surface only
+    function lexicalLayer(text) {
+      const stop = new Set([
+        "the","and","for","with","that","this","from","your","have","will","into","about","their","these","those","also",
+        "para","como","pero","porque","sobre","entre","desde","hasta","donde","cuando","quien","esta","este","estos","estas",
+        "del","las","los","una","uno","unos","unas"
+      ]);
+
+      const words = (text.toLowerCase().match(/[a-záéíóúüñ]{4,}/g) || []).filter((w) => !stop.has(w));
+      const counts = {};
+      for (const w of words) counts[w] = (counts[w] || 0) + 1;
+
+      const topWords = Object.entries(counts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 10)
+        .map(([word, count]) => ({ word, count }));
+
+      return { topWords };
+    }
+
+    // STEP 2 — semantic interpretation (problem + content nature)
+    function semanticLayer(text, goal) {
+      const lower = text.toLowerCase();
+
+      const signals = {
+        procedures: scoreMatches(lower, ["step", "steps", "procedure", "workflow", "implement", "execution", "process", "checklist", "fase", "paso", "procedimiento"]),
+        recommendations: scoreMatches(lower, ["recommend", "should", "best practice", "guideline", "sugerencia", "recomend", "debe"]),
+        strategies: scoreMatches(lower, ["strategy", "roadmap", "plan", "objective", "kpi", "priorit", "estrategia", "planificación"]),
+        decisionCriteria: scoreMatches(lower, ["criteria", "trade-off", "evaluate", "decision", "matrix", "compar", "criterio", "decisión"]),
+        definitions: scoreMatches(lower, ["is defined as", "definition", "concept", "means", "se define", "definición"]),
+        dataEvidence: scoreMatches(lower, ["dataset", "table", "metric", "statistics", "evidence", "analysis", "datos", "métrica"]),
+        explanatoryTheory: scoreMatches(lower, ["theory", "framework", "model", "principle", "paradigm", "teoría", "modelo"]) 
+      };
+
+      const actionSignals = signals.procedures + signals.recommendations + signals.strategies + signals.decisionCriteria;
+      const descriptiveSignals = signals.definitions + signals.dataEvidence + signals.explanatoryTheory;
+      const teachesHowTo = actionSignals >= Math.max(2, descriptiveSignals);
+
+      let problemSolved = "General content understanding and information structuring.";
+      if (actionSignals >= 3) {
+        problemSolved = "Guiding execution, decisions, or implementation actions in a practical context.";
+      } else if (signals.definitions + signals.explanatoryTheory >= 2) {
+        problemSolved = "Clarifying concepts, models, and foundational understanding for the audience.";
+      } else if (signals.dataEvidence >= 2) {
+        problemSolved = "Supporting interpretation of data and evidence for informed conclusions.";
+      }
+
+      return {
+        signals,
+        actionSignals,
+        descriptiveSignals,
+        teachesHowTo,
+        problemSolved,
+        goalHint: goal
+      };
+    }
+
+    // STEP 3 — dominant intent category + frequency bias prevention
+    function intentLayer(semantic) {
+      const s = semantic.signals;
+
+      const actionOriented = (s.procedures + s.recommendations + s.strategies + s.decisionCriteria) >= 2;
+
+      let dominantCategory = "Informational reference";
+      if (s.strategies >= Math.max(s.procedures, s.definitions, s.explanatoryTheory) && s.strategies >= 1) {
+        dominantCategory = "Strategy guide";
+      } else if (s.procedures >= Math.max(s.strategies, s.definitions) && s.procedures >= 1) {
+        dominantCategory = "Operational process";
+      } else if (s.explanatoryTheory + s.definitions >= 2) {
+        dominantCategory = "Educational theory";
+      } else if (s.dataEvidence + s.definitions >= 2) {
+        dominantCategory = "Informational reference";
+      }
+
+      if (/story|narrative|historia|relato/i.test(JSON.stringify(s)) && !actionOriented) {
+        dominantCategory = "Narrative content";
+      }
+
+      return {
+        dominantCategory,
+        actionOrientedContent: actionOriented,
+        frequencyBiasGuard: "Tools are validated against intent and actionability, not only term frequency."
+      };
+    }
+
+    function scoreMatches(text, tokens) {
+      return tokens.reduce((sum, tk) => sum + ((text.match(new RegExp(escapeRegExp(tk), "gi")) || []).length), 0);
+    }
+
+    function escapeRegExp(str) {
+      return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
+    function selfValidation(semantic, intent) {
+      const validWithoutFreq = semantic.problemSolved.length > 20 && Boolean(intent.dominantCategory);
+      return {
+        statement: "If frequency is ignored, interpretation remains tied to document function and intent.",
+        pass: validWithoutFreq
+      };
+    }
+
+    function generateTools(ctx) {
+      const { semantic, intent, lexical, userGoal, textSnippet, fileName } = ctx;
+      const topTerms = lexical.topWords.slice(0, 5).map((x) => x.word).join(", ") || "core content";
+
+      // Priority order mandated by spec.
+      const pool = [
+        {
+          type: "Action plan generators",
+          name: "Execution Action Planner",
+          short: "Turns document guidance into prioritized actions, owners, deadlines and status flow.",
+          use: "When teams need to convert recommendations into concrete implementation steps."
+        },
+        {
+          type: "Decision support tools",
+          name: "Decision Criteria Engine",
+          short: "Builds weighted decision matrices from criteria and constraints found in the document.",
+          use: "When users must choose between alternatives using explicit decision rules."
+        },
+        {
+          type: "Strategy simulators",
+          name: "Strategy Scenario Simulator",
+          short: "Lets users test strategic options and visualize probable outcomes under different assumptions.",
+          use: "When the document presents strategic routes and trade-offs."
+        },
+        {
+          type: "Implementation frameworks",
+          name: "Implementation Framework Builder",
+          short: "Converts methodology into phased execution boards, milestones and risk controls.",
+          use: "When readers need a repeatable framework to operationalize the document."
+        },
+        {
+          type: "Process visualizers",
+          name: "Process Flow Visualizer",
+          short: "Transforms procedures into step-by-step interactive process maps and dependencies.",
+          use: "When the text explains operational sequences or workflows."
+        },
+        {
+          type: "Decision support tools",
+          name: "Recommendation-to-Decision Translator",
+          short: "Links recommendations to decision checkpoints and execution gates.",
+          use: "When recommendations need governance and traceability before implementation."
+        }
+      ];
+
+      const filtered = pool.filter((tool) => toolPassesRules(tool, intent, semantic));
+      const selected = filtered.length >= 5 ? filtered.slice(0, 6) : pool.slice(0, 6);
+
+      return selected.map((tool, idx) => ({
+        id: `${Date.now()}-${idx}`,
+        ...tool,
+        context: {
+          fileName,
+          category: intent.dominantCategory,
+          actionOriented: intent.actionOrientedContent,
+          problem: semantic.problemSolved,
+          userGoal,
+          topTerms,
+          snippet: textSnippet.slice(0, 800)
+        }
+      }));
+    }
+
+    function toolPassesRules(tool, intent, semantic) {
+      // Rule 1: must transform content into practical actions.
+      const transformsToAction = /(plan|decision|strategy|implementation|process|execution)/i.test(`${tool.name} ${tool.short} ${tool.use}`);
+
+      // Rule 2: must match real intent (action-oriented gets action tools only).
+      const matchesIntent = intent.actionOrientedContent
+        ? transformsToAction
+        : /(decision|strategy|framework|reference|process)/i.test(tool.type + tool.name);
+
+      // Rule 3: must make sense without keywords -> relies on problem/intent, not term list.
+      const independentFromFreq = semantic.problemSolved.length > 20 && intent.dominantCategory.length > 4;
+
+      // Generic template filter.
+      const nonGeneric = !/(glossary|dictionary|quiz|generic|explorer|summary)/i.test(tool.name + tool.type + tool.short);
+
+      return transformsToAction && matchesIntent && independentFromFreq && nonGeneric;
+    }
+
+    function renderAnalysis(lexical, semantic, intent, selfCheck) {
+      const words = lexical.topWords.map((w) => `<span class="chip">${escapeHtml(w.word)} (${w.count})</span>`).join("");
+
+      ui.analysisOutput.innerHTML = `
+        <div><strong>Clasificación dominante:</strong> ${escapeHtml(intent.dominantCategory)}</div>
+        <div><strong>ACTION-ORIENTED CONTENT:</strong> ${intent.actionOrientedContent ? "YES" : "NO"}</div>
+        <div class="chips" style="margin-bottom:8px;">${words || "<span class='chip'>No lexical terms</span>"}</div>
+
+        <div class="analysis-grid">
+          <article class="layer-card">
+            <h3>Step 1 — Lexical layer</h3>
+            <p>Se detectaron términos frecuentes, pero no se usan solos para definir propósito.</p>
+          </article>
+          <article class="layer-card">
+            <h3>Step 2 — Semantic layer</h3>
+            <p><strong>Problema que resuelve:</strong> ${escapeHtml(semantic.problemSolved)}<br>
+            <strong>Enseña cómo hacer:</strong> ${semantic.teachesHowTo ? "Sí" : "No"}</p>
+          </article>
+          <article class="layer-card">
+            <h3>Step 3 — Intent layer</h3>
+            <p>${escapeHtml(intent.frequencyBiasGuard)}<br>
+            <strong>Self-check:</strong> ${selfCheck.pass ? "PASS" : "REVIEW"}</p>
+          </article>
+        </div>
+      `;
+    }
+
+    function renderIdeas(ideas) {
+      if (!ideas.length) {
+        ui.ideas.innerHTML = '<div class="empty">No tools generated after validation filters.</div>';
+        return;
+      }
+
+      ui.ideas.innerHTML = "";
+      ideas.forEach((idea) => {
+        const el = document.createElement("article");
+        el.className = "idea";
+        el.innerHTML = `
+          <div class="idea-head">
+            <div>
+              <h3>${escapeHtml(idea.name)}</h3>
+              <p>${escapeHtml(idea.short)}</p>
+              <p class="use"><strong>Use case:</strong> ${escapeHtml(idea.use)}</p>
+            </div>
+            <button type="button" data-id="${idea.id}">Generate Prompt</button>
+          </div>
+          <div class="chips"><span class="chip">${escapeHtml(idea.type)}</span><span class="chip">${escapeHtml(idea.context.category)}</span></div>
+        `;
+
+        el.querySelector("button").addEventListener("click", () => {
+          const prompt = buildPrompt(idea);
+          openModal(prompt, idea.name);
+        });
+
+        ui.ideas.appendChild(el);
+      });
+    }
+
+    function buildPrompt(idea) {
+      return [
+        `You are an expert front-end engineer and product designer. Build a complete single-file HTML app (HTML + CSS + JavaScript) for: ${idea.name}.`,
+        "",
+        "Context:",
+        `- Source PDF: ${idea.context.fileName}`,
+        `- Dominant intent category: ${idea.context.category}`,
+        `- Action-oriented content: ${idea.context.actionOriented ? "Yes" : "No"}`,
+        `- Problem solved by source document: ${idea.context.problem}`,
+        `- User goal: ${idea.context.userGoal}`,
+        `- Supporting terms (lexical only): ${idea.context.topTerms}`,
+        `- Source excerpt: ${idea.context.snippet}`,
+        "",
+        "Purpose:",
+        `- Build a practical tool that enables this use case: ${idea.use}`,
+        `- Ensure the experience transforms document intent into actionable outcomes, not generic summaries.`,
+        "",
+        "Functional requirements:",
+        "1) Include structured inputs and strong validation.",
+        "2) Include core interaction logic to execute the tool objective.",
+        "3) Provide actionable outputs (plans, decisions, frameworks, or process maps).",
+        "4) Add clear status and feedback states.",
+        "5) Include sample data so the app works immediately offline.",
+        "",
+        "UI expectations:",
+        "- Modern clean responsive interface.",
+        "- Accessible labels, keyboard support, high contrast.",
+        "- Card-based sections, clear CTA buttons, readable typography.",
+        "",
+        "Technical constraints:",
+        "- Vanilla JavaScript only.",
+        "- Everything in one HTML file; no backend.",
+        "- Return only one final code block with full HTML."
+      ].join("\n");
+    }
+
+    function openModal(prompt, title) {
+      currentPrompt = prompt;
+      ui.promptTitle.textContent = `Generated Prompt — ${title}`;
+      ui.promptBody.textContent = prompt;
+      ui.promptModal.classList.add("open");
+    }
+
+    function closeModal() {
+      ui.promptModal.classList.remove("open");
+    }
+
+    async function copyPrompt() {
       if (!currentPrompt) return;
       try {
         await navigator.clipboard.writeText(currentPrompt);
-        copyPromptBtn.textContent = "Copied!";
-        setTimeout(() => { copyPromptBtn.textContent = "Copy Prompt"; }, 1200);
       } catch {
-        // Fallback for environments where clipboard API is restricted.
         const area = document.createElement("textarea");
         area.value = currentPrompt;
         document.body.appendChild(area);
         area.select();
         document.execCommand("copy");
         document.body.removeChild(area);
-        copyPromptBtn.textContent = "Copied!";
-        setTimeout(() => { copyPromptBtn.textContent = "Copy Prompt"; }, 1200);
       }
-    });
-
-    function setStatus(message, type = "") {
-      analysisStatus.textContent = message;
-      analysisStatus.className = `status ${type}`.trim();
+      ui.copyBtn.textContent = "Copied!";
+      setTimeout(() => (ui.copyBtn.textContent = "Copy Prompt"), 1100);
     }
 
-    async function extractFullTextFromPdf(file) {
-      const data = await file.arrayBuffer();
-      const pdf = await pdfjsLib.getDocument({ data }).promise;
-      let fullText = "";
-
-      for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-        const page = await pdf.getPage(pageNum);
-        const content = await page.getTextContent();
-        const pageText = content.items
-          .map(item => ("str" in item ? item.str : ""))
-          .join(" ");
-
-        fullText += `\n${pageText}`;
-      }
-
-      return fullText
-        .replace(/\s+/g, " ")
-        .replace(/[\u0000-\u001F]+/g, " ")
-        .trim();
+    function setStatus(msg, type = "") {
+      ui.status.textContent = msg;
+      ui.status.className = `status ${type}`.trim();
     }
 
-    function analyzeKeywordsAndConcepts(text) {
-      const stopWords = new Set([
-        "the", "and", "for", "with", "that", "this", "from", "your", "have", "will", "could", "would", "should",
-        "into", "about", "their", "there", "where", "which", "when", "what", "while", "been", "more", "than", "over",
-        "also", "such", "using", "used", "these", "those", "were", "they", "them", "then", "only", "make", "made",
-        "para", "como", "pero", "porque", "sobre", "entre", "desde", "hasta", "donde", "cuando", "quien", "esta", "este",
-        "estos", "estas", "muy", "cada", "todo", "toda", "todos", "todas", "del", "las", "los", "una", "uno", "unos", "unas"
-      ]);
-
-      const words = (text.toLowerCase().match(/[a-záéíóúüñ]{4,}/g) || [])
-        .filter(word => !stopWords.has(word));
-
-      const freqMap = words.reduce((acc, word) => {
-        acc[word] = (acc[word] || 0) + 1;
-        return acc;
-      }, {});
-
-      const topics = Object.entries(freqMap)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 12)
-        .map(([word, count]) => ({ word, count }));
-
-      const conceptPhrases = extractConceptPhrases(text, stopWords);
-      const concepts = conceptPhrases.slice(0, 10);
-
-      return { topics, concepts };
-    }
-
-    function extractConceptPhrases(text, stopWords) {
-      // Build simple 2-word concepts (bigrams) from meaningful words.
-      const tokens = (text.toLowerCase().match(/[a-záéíóúüñ]{4,}/g) || [])
-        .filter(w => !stopWords.has(w));
-
-      const bigrams = [];
-      for (let i = 0; i < tokens.length - 1; i++) {
-        const a = tokens[i];
-        const b = tokens[i + 1];
-        if (a && b && a !== b) bigrams.push(`${a} ${b}`);
-      }
-
-      const counts = bigrams.reduce((acc, phrase) => {
-        acc[phrase] = (acc[phrase] || 0) + 1;
-        return acc;
-      }, {});
-
-      return Object.entries(counts)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 16)
-        .map(([phrase, count]) => ({ phrase, count }));
-    }
-
-    function generateToolIdeas({ topics, concepts, instructions, sourceSnippet, fileName }) {
-      const topicWords = topics.slice(0, 6).map(t => t.word);
-      const conceptWords = concepts.slice(0, 4).map(c => c.phrase);
-      const focus = [...topicWords, ...conceptWords].join(", ") || "main document concepts";
-
-      const baseIdeas = [
-        {
-          name: "Interactive Knowledge Explorer",
-          shortDescription: "A searchable content explorer that organizes PDF insights into topic cards and expandable concept summaries.",
-          useCase: "Perfect for quickly finding key information when the document is long or highly technical."
-        },
-        {
-          name: "Guided Checklist Builder",
-          shortDescription: "Transforms extracted recommendations, steps, or procedures into an actionable checklist with progress tracking.",
-          useCase: "Useful when users need to follow a process consistently (training, audits, implementation plans)."
-        },
-        {
-          name: "Quiz & Scenario Studio",
-          shortDescription: "Generates review questions and practical scenarios from document themes to reinforce understanding.",
-          useCase: "Ideal for education, onboarding, and self-assessment workflows."
-        },
-        {
-          name: "Decision Support Matrix",
-          shortDescription: "Builds a criteria-based decision table from PDF concepts so users can compare options visually.",
-          useCase: "Helpful when teams need to evaluate alternatives using structured criteria from the source document."
-        },
-        {
-          name: "Terminology & Concept Dictionary",
-          shortDescription: "Creates a mini glossary of key terms and concepts extracted from the PDF with quick definitions and context notes.",
-          useCase: "Great for complex domains where users need a shared language and easier interpretation."
-        },
-        {
-          name: "Action Plan Generator",
-          shortDescription: "Converts PDF content into prioritized action items with timeline, owners, and status indicators.",
-          useCase: "Designed for turning strategy or policy content into practical implementation plans."
-        }
-      ];
-
-      return baseIdeas.map((idea, i) => ({
-        id: `${Date.now()}-${i}`,
-        ...idea,
-        context: {
-          fileName,
-          focus,
-          instructions,
-          sourceSnippet: sourceSnippet.slice(0, 900)
-        }
-      }));
-    }
-
-    function renderTopicSummary(topics, concepts) {
-      const topicHtml = topics.slice(0, 8)
-        .map(t => `<span class="chip">${escapeHtml(t.word)} (${t.count})</span>`)
-        .join("");
-
-      const conceptHtml = concepts.slice(0, 6)
-        .map(c => `<span class="chip">${escapeHtml(c.phrase)}</span>`)
-        .join("");
-
-      topicSummaryEl.innerHTML = `
-        <strong>Detected main topics:</strong>
-        <div class="keyword-list" style="margin-top:8px; margin-bottom:10px;">${topicHtml || "<span class='chip'>No clear topics</span>"}</div>
-        <strong>Relevant concepts:</strong>
-        <div class="keyword-list" style="margin-top:8px;">${conceptHtml || "<span class='chip'>No clear concepts</span>"}</div>
-      `;
-    }
-
-    function renderIdeas(ideas) {
-      if (!ideas.length) {
-        ideasEl.innerHTML = '<div class="empty">No ideas generated.</div>';
-        return;
-      }
-
-      ideasEl.innerHTML = "";
-
-      ideas.forEach((idea) => {
-        const card = document.createElement("article");
-        card.className = "idea-card";
-
-        card.innerHTML = `
-          <div class="idea-top">
-            <div>
-              <p class="idea-name">${escapeHtml(idea.name)}</p>
-              <p class="idea-short">${escapeHtml(idea.shortDescription)}</p>
-              <p class="idea-use"><strong>Use case:</strong> ${escapeHtml(idea.useCase)}</p>
-            </div>
-            <button type="button" data-generate-id="${idea.id}">Generate Prompt</button>
-          </div>
-        `;
-
-        const button = card.querySelector("button");
-        button.addEventListener("click", () => {
-          const prompt = buildDetailedPrompt(idea);
-          openPromptModal(prompt, idea.name);
-        });
-
-        ideasEl.appendChild(card);
-      });
-    }
-
-    function buildDetailedPrompt(idea) {
-      return [
-        `You are a senior front-end engineer. Build a complete single-file HTML application (HTML + CSS + JavaScript in one file) for this tool: ${idea.name}.`,
-        "",
-        "Context:",
-        `- Source file: ${idea.context.fileName}`,
-        `- Key topics/concepts: ${idea.context.focus}`,
-        `- User objective: ${idea.context.instructions}`,
-        `- Source excerpt: ${idea.context.sourceSnippet || "N/A"}`,
-        "",
-        "Purpose:",
-        `- Create a practical web tool that fulfills this use case: ${idea.useCase}`,
-        `- Tool summary: ${idea.shortDescription}`,
-        "",
-        "Functional requirements:",
-        "1) Provide clear user inputs and validation messages.",
-        "2) Include dynamic interactions and meaningful feedback states.",
-        "3) Add data views/components that directly support the purpose.",
-        "4) Include demo/sample data so the app works immediately offline.",
-        "5) Implement export or copy-friendly output where relevant.",
-        "",
-        "UI expectations:",
-        "- Modern, clean, responsive layout.",
-        "- Accessible labels, keyboard-friendly interactions, and strong color contrast.",
-        "- Visual hierarchy with sections/cards and intuitive call-to-action buttons.",
-        "- Keep everything client-side, no backend required.",
-        "",
-        "Technical constraints:",
-        "- Vanilla JavaScript only (no frameworks).",
-        "- Everything must run locally in one HTML file.",
-        "- Write clean, commented, maintainable code.",
-        "",
-        "Output format:",
-        "- Return only the final complete HTML code in a single code block."
-      ].join("\n");
-    }
-
-    function openPromptModal(prompt, toolName) {
-      currentPrompt = prompt;
-      document.getElementById("promptTitle").textContent = `Generated Prompt — ${toolName}`;
-      promptTextEl.textContent = prompt;
-      promptModal.classList.add("open");
-    }
-
-    function closeModal() {
-      promptModal.classList.remove("open");
-    }
-
-    function escapeHtml(str) {
-      return String(str)
+    function escapeHtml(v) {
+      return String(v)
         .replaceAll("&", "&amp;")
         .replaceAll("<", "&lt;")
         .replaceAll(">", "&gt;")
